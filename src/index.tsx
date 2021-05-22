@@ -1,10 +1,66 @@
-import * as React from 'react'
+import React from 'react'
 import styles from './styles.module.css'
+import icon from './asset/icon.module.png'
 
-interface Props {
-  text: string
+class Tag extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props)
+    this.addNewTag = this.addNewTag.bind(this)
+    this.removeTag = this.removeTag.bind(this)
+  }
+
+  state = {
+    tag: '',
+    tags: []
+  }
+
+  addNewTag = (e: any) => {
+    if (e.which === 13) {
+      const newTag = e.target.value
+      console.log(`adding new tag: ${e.target.value}`)
+      this.setState((prevState: any) => ({
+        tags: [...prevState.tags, newTag],
+        tag: ''
+      }))
+    }
+  }
+
+  removeTag = (tName: any) => {
+    this.setState((prevState: any) => ({
+      tags: prevState.tags.filter((t: any) => t !== tName)
+    }))
+  }
+
+  render() {
+    return (
+      <div>
+        <div className={styles.tagContent}>
+          {this.state.tags.map((t: any) => {
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <span className={styles.tagItem}>
+                <div className={styles.cancelIcon}>
+                  <img src={icon} onClick={() => this.removeTag(t)} />
+                </div>
+                {t}
+              </span>
+            )
+          })}
+        </div>
+        <div style={{ gap: '1rem', display: 'flex' }}>
+          <span>{this.props.label}</span>
+          <input
+            type='text'
+            onKeyPress={this.addNewTag}
+            value={this.state.tag}
+            onChange={(e: any) => {
+              this.setState({ tag: e.target.value })
+            }}
+          />
+        </div>
+      </div>
+    )
+  }
 }
 
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+export default Tag

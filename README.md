@@ -1,4 +1,4 @@
-# tags-component
+# h-tags-component
 
 > Tag component with add/remove functionality
 
@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save tags-component
+npm install --save h-tags-component
 ```
 
 ## Usage
@@ -15,12 +15,12 @@ npm install --save tags-component
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'tags-component'
+import Tags from 'h-tags-component'
 import 'tags-component/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <Tags label='Countries' />
   }
 }
 ```

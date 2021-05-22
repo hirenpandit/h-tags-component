@@ -1,9 +1,24 @@
-/* add css module styles here (optional) */
-
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.tagContent { 
+  display: inline-flex; 
+  gap: 2px; 
+  flex-wrap: wrap; 
+} 
+.tagItem { 
+  background-color: lightgrey; 
+  border-radius: 5px; 
+  place-content: start; 
+  padding: 5px; 
+  margin: 3px; 
+  height: 15px; 
+  display: flex; 
+  gap: 0.3em; 
+} 
+.cancelIcon { 
+  top:0; 
+  right:0; 
+} 
+.cancelIcon img { 
+  width: 16px; 
+  height: 16px; 
+  cursor: pointer; 
 }

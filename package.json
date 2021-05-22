@@ -1,6 +1,6 @@
 {
-  "name": "tags-component",
-  "version": "1.0.0",
+  "name": "h-tags-component",
+  "version": "1.0.1",
   "description": "Tag component with add/remove functionality",
   "author": "hirenpandit",
   "license": "MIT",
