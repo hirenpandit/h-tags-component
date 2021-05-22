@@ -3,10 +3,12 @@ import styles from './styles.module.css'
 import icon from './asset/icon.module.png'
 
 class Tag extends React.Component<any, any> {
+  errorRef: any = null
   constructor(props: any) {
     super(props)
     this.addNewTag = this.addNewTag.bind(this)
     this.removeTag = this.removeTag.bind(this)
+    this.errorRef = React.createRef()
   }
 
   ENTER_KEY: number = 13 // ENTER key
@@ -28,6 +30,7 @@ class Tag extends React.Component<any, any> {
           (t: string) => t.toLowerCase() === newTag.toLowerCase()
         ).length > 0
       ) {
+        this.errorRef.current.innerHTML = this.props.label + ' already exist'
         return
       }
       this.setState((prevState: any) => ({
@@ -66,9 +69,12 @@ class Tag extends React.Component<any, any> {
             onKeyPress={this.addNewTag}
             value={this.state.tag}
             onChange={(e: any) => {
+              this.errorRef.current.innerHTML = ''
               this.setState({ tag: e.target.value })
             }}
           />
+          <div id='errorMsg' className={styles.errormsg} ref={this.errorRef} />
+          <img src={icon} />
         </div>
       </div>
     )
