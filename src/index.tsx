@@ -9,7 +9,7 @@ class Tag extends React.Component<any, any> {
     this.removeTag = this.removeTag.bind(this)
   }
 
-  ENTER_KEY: number = 13
+  ENTER_KEY: number = 13 // ENTER key
 
   state = {
     tag: '',
@@ -23,6 +23,7 @@ class Tag extends React.Component<any, any> {
         return
       }
       if (
+        !this.props.allowDuplicate &&
         this.state.tags.filter(
           (t: string) => t.toLowerCase() === newTag.toLowerCase()
         ).length > 0
