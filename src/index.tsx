@@ -9,15 +9,26 @@ class Tag extends React.Component<any, any> {
     this.removeTag = this.removeTag.bind(this)
   }
 
+  ENTER_KEY: number = 13
+
   state = {
     tag: '',
     tags: []
   }
 
   addNewTag = (e: any) => {
-    if (e.which === 13) {
+    if (e.which === this.ENTER_KEY) {
       const newTag = e.target.value
-      console.log(`adding new tag: ${e.target.value}`)
+      if (!newTag) {
+        return
+      }
+      if (
+        this.state.tags.filter(
+          (t: string) => t.toLowerCase() === newTag.toLowerCase()
+        ).length > 0
+      ) {
+        return
+      }
       this.setState((prevState: any) => ({
         tags: [...prevState.tags, newTag],
         tag: ''
@@ -38,7 +49,7 @@ class Tag extends React.Component<any, any> {
           {this.state.tags.map((t: any) => {
             return (
               // eslint-disable-next-line react/jsx-key
-              <span className={styles.tagItem}>
+              <span className={styles.tagItem} key={t}>
                 <div className={styles.cancelIcon}>
                   <img src={icon} onClick={() => this.removeTag(t)} />
                 </div>
