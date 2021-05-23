@@ -1,13 +1,19 @@
 import React from 'react'
 import styles from './styles.module.css'
 import icon from './asset/icon.module.png'
+// eslint-disable-next-line no-unused-vars
+import { TagProperties, DUPLICATE_MSG, EMPTY_MSG } from './tag-properties'
 
-class Tag extends React.Component<any, any> {
-  constructor(props: any) {
+class Tag extends React.Component<TagProperties, any> {
+  errorRef: any = null
+  constructor(props: TagProperties) {
     super(props)
     this.addNewTag = this.addNewTag.bind(this)
     this.removeTag = this.removeTag.bind(this)
+    this.errorRef = React.createRef()
   }
+
+  ENTER_KEY: number = 13 // ENTER key
 
   state = {
     tag: '',
@@ -15,9 +21,21 @@ class Tag extends React.Component<any, any> {
   }
 
   addNewTag = (e: any) => {
-    if (e.which === 13) {
+    if (e.which === this.ENTER_KEY) {
       const newTag = e.target.value
-      console.log(`adding new tag: ${e.target.value}`)
+      if (!newTag.trim()) {
+        this.errorRef.current.innerHTML = EMPTY_MSG
+        return
+      }
+      if (
+        !this.props.duplicate &&
+        this.state.tags.filter(
+          (t: string) => t.toLowerCase() === newTag.toLowerCase()
+        ).length > 0
+      ) {
+        this.errorRef.current.innerHTML = DUPLICATE_MSG
+        return
+      }
       this.setState((prevState: any) => ({
         tags: [...prevState.tags, newTag],
         tag: ''
@@ -38,7 +56,7 @@ class Tag extends React.Component<any, any> {
           {this.state.tags.map((t: any) => {
             return (
               // eslint-disable-next-line react/jsx-key
-              <span className={styles.tagItem}>
+              <span className={styles.tagItem} key={t}>
                 <div className={styles.cancelIcon}>
                   <img src={icon} onClick={() => this.removeTag(t)} />
                 </div>
@@ -54,9 +72,11 @@ class Tag extends React.Component<any, any> {
             onKeyPress={this.addNewTag}
             value={this.state.tag}
             onChange={(e: any) => {
+              this.errorRef.current.innerHTML = ''
               this.setState({ tag: e.target.value })
             }}
           />
+          <div id='errorMsg' className={styles.errormsg} ref={this.errorRef} />
         </div>
       </div>
     )

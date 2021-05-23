@@ -4,7 +4,7 @@ import Tag from 'tags-component'
 import 'tags-component/dist/index.css'
 
 const App = () => {
-  return <Tag label="Create React Library Example 😄" />
+  return <Tag label='Technologies' duplicate={false} />
 }
 
 export default App
