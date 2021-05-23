@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.module.css'
 import icon from './asset/icon.module.png'
 // eslint-disable-next-line no-unused-vars
-import { TagProperties } from './tag-properties'
+import { TagProperties, DUPLICATE_MSG, EMPTY_MSG } from './tag-properties'
 
 class Tag extends React.Component<TagProperties, any> {
   errorRef: any = null
@@ -23,7 +23,8 @@ class Tag extends React.Component<TagProperties, any> {
   addNewTag = (e: any) => {
     if (e.which === this.ENTER_KEY) {
       const newTag = e.target.value
-      if (!newTag) {
+      if (!newTag.trim()) {
+        this.errorRef.current.innerHTML = EMPTY_MSG
         return
       }
       if (
@@ -32,7 +33,7 @@ class Tag extends React.Component<TagProperties, any> {
           (t: string) => t.toLowerCase() === newTag.toLowerCase()
         ).length > 0
       ) {
-        this.errorRef.current.innerHTML = this.props.label + ' already exist'
+        this.errorRef.current.innerHTML = DUPLICATE_MSG
         return
       }
       this.setState((prevState: any) => ({
