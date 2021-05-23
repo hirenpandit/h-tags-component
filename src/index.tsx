@@ -1,10 +1,12 @@
 import React from 'react'
 import styles from './styles.module.css'
 import icon from './asset/icon.module.png'
+// eslint-disable-next-line no-unused-vars
+import { TagProperties } from './tag-properties'
 
-class Tag extends React.Component<any, any> {
+class Tag extends React.Component<TagProperties, any> {
   errorRef: any = null
-  constructor(props: any) {
+  constructor(props: TagProperties) {
     super(props)
     this.addNewTag = this.addNewTag.bind(this)
     this.removeTag = this.removeTag.bind(this)
@@ -25,7 +27,7 @@ class Tag extends React.Component<any, any> {
         return
       }
       if (
-        !this.props.allowDuplicate &&
+        !this.props.duplicate &&
         this.state.tags.filter(
           (t: string) => t.toLowerCase() === newTag.toLowerCase()
         ).length > 0
@@ -74,7 +76,6 @@ class Tag extends React.Component<any, any> {
             }}
           />
           <div id='errorMsg' className={styles.errormsg} ref={this.errorRef} />
-          <img src={icon} />
         </div>
       </div>
     )
